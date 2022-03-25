@@ -126,7 +126,7 @@ module position_registers(
    else if (PL_en[3]==1'b1)
     pos4 <= 2'b01;// store player data 
    else 
-    pos4 <= pos4;// keep previous position
+    pos4 <= pos4;
   end 
  end 
  // Position 5 
