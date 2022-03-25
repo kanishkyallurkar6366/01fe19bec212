@@ -1,33 +1,30 @@
 module tic_tac_toe_game(
-     input clock, // clock of the game 
-     input reset, // reset button to reset the game 
-     input play, // play button to enable player to play 
-     input pc, // pc button to enable computer to play 
+     input clock,  
+     input reset, 
+     input play,  
+     input pc, 
      input [3:0] computer_position,player_position, 
-     // positions to play 
      output wire [1:0] pos1,pos2,pos3,
      pos4,pos5,pos6,pos7,pos8,pos9,
-     // LED display for positions 
-     // 01: Player 
-     // 10: Computer 
+        
      output wire[1:0]who 
-     // who the winner is 
+     
      );
- wire [15:0] PC_en;// Computer enable signals 
- wire [15:0] PL_en; // Player enable signals 
- wire illegal_move; // disable writing when an illegal move is detected 
+ wire [15:0] PC_en;
+ wire [15:0] PL_en; 
+ wire illegal_move; 
  //wire [1:0] pos1,pos2,pos3,pos4,pos5,pos6,pos7,pos8,pos9;// positions stored
- wire win; // win signal 
- wire computer_play; // computer enabling signal 
- wire player_play; // player enabling signal 
- wire no_space; // no space signal 
- // position registers    
+ wire win; 
+ wire computer_play;
+ wire player_play; 
+ wire no_space;  
+ 
   position_registers position_reg_unit(
-      clock, // clock of the game 
-      reset, // reset the game 
-      illegal_move, // disable writing when an illegal move is detected 
-      PC_en[8:0], // Computer enable signals 
-      PL_en[8:0], // Player enable signals 
+      clock,
+      reset, 
+      illegal_move,
+      PC_en[8:0],  
+      PL_en[8:0], 
       pos1,pos2,pos3,pos4,pos5,pos6,pos7,pos8,pos9// positions stored
       );
  // winner detector 
@@ -48,28 +45,25 @@ module tic_tac_toe_game(
    no_space
     ); 
  fsm_controller tic_tac_toe_controller(
-     clock,// clock of the circuit 
-     reset,// reset 
-     play, // player plays 
-     pc,// computer plays 
-     illegal_move,// illegal move detected 
-     no_space, // no_space detected 
-     win, // winner detected 
-     computer_play, // enable computer to play 
-     player_play // enable player to play 
+     clock, 
+     reset,
+     play, 
+     pc,
+     illegal_move,
+     no_space,
+     win, 
+     computer_play, 
+     player_play 
      );    
 endmodule 
-// Position registers 
-// fpga4student.com: FPGA projects, Verilog projects, VHDL projects
-// to store player or computer positions 
-// when enabling by the FSM controller 
+
 module position_registers(
-      input clock, // clock of the game 
-      input reset, // reset the game 
-      input illegal_move, // disable writing when an illegal move is detected 
-      input [8:0] PC_en, // Computer enable signals 
-      input [8:0] PL_en, // Player enable signals 
-      output reg[1:0] pos1,pos2,pos3,pos4,pos5,pos6,pos7,pos8,pos9// positions stored
+      input clock, 
+      input reset, 
+      input illegal_move, 
+      input [8:0] PC_en, 
+      input [8:0] PL_en, 
+      output reg[1:0] pos1,pos2,pos3,pos4,pos5,pos6,pos7,pos8,pos9
       );
  // Position 1 
  always @(posedge clock or posedge reset)
@@ -78,13 +72,13 @@ module position_registers(
    pos1 <= 2'b00;
   else begin
    if(illegal_move==1'b1)
-    pos1 <= pos1;// keep previous position
+    pos1 <= pos1;
    else if(PC_en[0]==1'b1)
-    pos1 <= 2'b10; // store computer data 
+    pos1 <= 2'b10; 
    else if (PL_en[0]==1'b1)
-    pos1 <= 2'b01;// store player data 
+    pos1 <= 2'b01;
    else 
-    pos1 <= pos1;// keep previous position
+    pos1 <= pos1;
   end 
  end 
  // Position 2 
@@ -94,13 +88,13 @@ module position_registers(
    pos2 <= 2'b00;
   else begin
    if(illegal_move==1'b1)
-    pos2 <= pos2;// keep previous position
+    pos2 <= pos2;
    else if(PC_en[1]==1'b1)
-    pos2 <= 2'b10; // store computer data 
+    pos2 <= 2'b10; 
    else if (PL_en[1]==1'b1)
-    pos2 <= 2'b01;// store player data 
+    pos2 <= 2'b01;
    else 
-    pos2 <= pos2;// keep previous position
+    pos2 <= pos2;
   end 
  end 
 // Position 3 
@@ -110,13 +104,13 @@ module position_registers(
    pos3 <= 2'b00;
   else begin
    if(illegal_move==1'b1)
-    pos3 <= pos3;// keep previous position
+    pos3 <= pos3;
    else if(PC_en[2]==1'b1)
-    pos3 <= 2'b10; // store computer data 
+    pos3 <= 2'b10; 
    else if (PL_en[2]==1'b1)
-    pos3 <= 2'b01;// store player data 
+    pos3 <= 2'b01;
    else 
-    pos3 <= pos3;// keep previous position
+    pos3 <= pos3;
   end 
  end  
  // Position 4 
@@ -126,13 +120,13 @@ module position_registers(
    pos4 <= 2'b00;
   else begin
    if(illegal_move==1'b1)
-    pos4 <= pos4;// keep previous position
+    pos4 <= pos4;
    else if(PC_en[3]==1'b1)
-    pos4 <= 2'b10; // store computer data 
+    pos4 <= 2'b10; 
    else if (PL_en[3]==1'b1)
-    pos4 <= 2'b01;// store player data 
+    pos4 <= 2'b01;
    else 
-    pos4 <= pos4;// keep previous position
+    pos4 <= pos4;
   end 
  end 
  // Position 5 
@@ -142,13 +136,13 @@ module position_registers(
    pos5 <= 2'b00;
   else begin
    if(illegal_move==1'b1)
-    pos5 <= pos5;// keep previous position
+    pos5 <= pos5;
    else if(PC_en[4]==1'b1)
-    pos5 <= 2'b10; // store computer data 
+    pos5 <= 2'b10; 
    else if (PL_en[4]==1'b1)
-    pos5 <= 2'b01;// store player data 
+    pos5 <= 2'b01;
    else 
-    pos5 <= pos5;// keep previous position
+    pos5 <= pos5;
   end 
  end 
  // Position 6 
@@ -217,8 +211,7 @@ module position_registers(
  end  
 endmodule 
 // FSM controller to control how player and computer play the TIC TAC TOE GAME 
-// The FSM is implemented based on the designed state diagram 
-// fpga4student.com: FPGA projects, Verilog projects, VHDL projects
+
 module fsm_controller(
      input clock,// clock of the circuit 
      input reset,// reset 
@@ -316,8 +309,7 @@ assign no_space =((((((((temp1 & temp2) & temp3) & temp4) & temp5) & temp6) & te
 endmodule 
 
 // Illegal move detector
-// to detect if a player plays on an exist position 
-// fpga4student.com: FPGA projects, Verilog projects, VHDL projects
+
 module illegal_move_detector(
    input [1:0] pos1,pos2,pos3,pos4,pos5,pos6,pos7,pos8,pos9, 
    input [8:0] PC_en, PL_en, 
@@ -352,10 +344,7 @@ assign temp22 =((((((((temp11 | temp12) | temp13) | temp14) | temp15) | temp16) 
 // output illegal move 
 assign illegal_move = temp21 | temp22 ;
 endmodule 
-// fpga4student.com: FPGA projects, Verilog projects, VHDL projects
-// To decode the position being played, a 4-to-16 decoder with high active output is needed.
-// When a button is pressed, a player will play and the position at IN [3:0] will be decoded
-// to enable writing to the corresponding registers
+
 module position_decoder(input[3:0] in, input enable, output wire [15:0] out_en);
  reg[15:0] temp1;
  assign out_en = (enable==1'b1)?temp1:16'd0;
@@ -382,11 +371,7 @@ module position_decoder(input[3:0] in, input enable, output wire [15:0] out_en);
  endcase 
 end 
 endmodule 
-// fpga4student.com: FPGA projects, Verilog projects, VHDL projects
-// winner detector circuit 
-// to detect who the winner is 
-// We will win when we have 3 similar (x) or (O) in the following pairs: 
-// (1,2,3); (4,5,6);(7,8,9); (1,4,7); (2,5,8);(3,6,9); (1,5,9);(3,5,7); 
+
 module winner_detector(input [1:0] pos1,pos2,pos3,pos4,pos5,pos6,pos7,pos8,pos9, output wire winner, output wire [1:0]who);
 wire win1,win2,win3,win4,win5,win6,win7,win8;
 wire [1:0] who1,who2,who3,who4,who5,who6,who7,who8;
@@ -401,10 +386,7 @@ winner_detect_3 u8(pos3,pos5,pos6,win8,who8);// (3,5,7);
 assign winner = (((((((win1 | win2) | win3) | win4) | win5) | win6) | win7) | win8);
 assign who = (((((((who1 | who2) | who3) | who4) | who5) | who6) | who7) | who8);
 endmodule 
-// fpga4student.com: FPGA projects, Verilog projects, VHDL projects
-// winner detection for 3 positions and determine who the winner is 
-// Player: 01
-// Computer: 10
+
 module winner_detect_3(input [1:0] pos0,pos1,pos2, output wire winner, output wire [1:0]who);
 wire [1:0] temp0,temp1,temp2;
 wire temp3;
